@@ -9,7 +9,8 @@ from PyQt5 import uic, QtGui, QtCore
 from matplotlib.figure import Figure
 
 from isstools.widgets import (widget_general_info, widget_trajectory_manager, widget_processing, widget_batch_mode,
-                              widget_run, widget_beamline_setup, widget_sdd_manager, widget_beamline_status)
+                              widget_run, widget_beamline_setup, widget_sdd_manager, widget_beamline_status,
+                              widget_run_step_scan)
 
 from isstools.elements import EmittingStream
 #Libs for ZeroMQ communication
@@ -216,7 +217,15 @@ class XliveGui(*uic.loadUiType(ui_path)):
         if self.RE is not None:
             self.widget_run = widget_run.UIRun(self.plan_funcs, db, shutters_dict, self.adc_list, self.enc_list,
                                                self.xia, self.html_log_func, self)
+
             self.layout_run.addWidget(self.widget_run)
+            self.widget_run_step_scan = widget_run_step_scan.UIRunStepScan(self.plan_funcs, db, shutters_dict, self.adc_list, self.enc_list,
+                                               self.xia, self.html_log_func, self)
+
+            self.layout_step_scan.addWidget(self.widget_run_step_scan)
+
+
+
             self.receiving_thread.received_interp_data.connect(self.widget_run.plot_scan)
 
             if self.hhm is not None:
