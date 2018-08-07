@@ -42,11 +42,27 @@
      </font>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Data Broker browser</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>5</y>
+        <width>1576</width>
+        <height>921</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="layout_db_browser"/>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_visualize">
      <attribute name="title">
-      <string>Browse data</string>
+      <string>File browser</string>
      </attribute>
      <widget class="QListWidget" name="listFiles_bin">
       <property name="geometry">

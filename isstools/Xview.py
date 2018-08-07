@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 
 from matplotlib.figure import Figure
-
+from isstools.widgets import widget_xview_db_browser
 
 from isstools.xasdata import xasdata
 from isstools.xasproject import xasproject
@@ -126,6 +126,10 @@ class XviewGui(*uic.loadUiType(ui_path)):
         self.action_merge.triggered.connect(self.merge_datasets)
         self.action_rename.triggered.connect(self.rename_dataset)
         self.action_remove.triggered.connect(self.remove_from_xas_project)
+
+        self.widget_db_browser = widget_xview_db_browser.UIDBBrowser(db, self)
+        self.layout_db_browser.addWidget(self.widget_db_browser)
+
 
         self.lineEdit_to_ds_parameter_dict = {
             'lineEdit_preedge_lo':  'pre1',
