@@ -46,7 +46,7 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Data Broker browser</string>
+      <string>DataBroker browser</string>
      </attribute>
      <widget class="QWidget" name="verticalLayoutWidget_4">
       <property name="geometry">

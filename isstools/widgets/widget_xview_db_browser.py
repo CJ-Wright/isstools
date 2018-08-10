@@ -107,9 +107,6 @@ class UIDBBrowser(*uic.loadUiType(ui_path)):
                         item = QtGui.QStandardItem(dataset_entry)
                         parent.appendRow(item)
 
-
-
-
             else:
                 self.parent_widget.statusBar().showMessage("Search did not return any datasets")
 
