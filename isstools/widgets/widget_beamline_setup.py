@@ -856,10 +856,15 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
         print('[Gain set scan] Complete\n')
 
     def prepare_bl(self, energy: int = -1):
-        self.RE(self.prepare_bl_plan(energy=energy, print_messages=True, debug=False))
+
+        #from bluesky.utils import ts_msg_hook
+        #self.RE.msg_hook = ts_msg_hook
+        self.RE(self.prepare_bl_plan(energy=energy, print_messages=True, debug=False,
+                                     stdout = self.parent_gui.emitstream_out))
 
     def prepare_bl_dialog(self):
         curr_energy = float(self.edit_pb_energy.text())
+        print(curr_energy)
 
         curr_range = [ran for ran in self.prepare_bl_def[0] if
                       ran['energy_end'] > curr_energy and ran['energy_start'] <= curr_energy]
@@ -869,6 +874,7 @@ class UIBeamlineSetup(*uic.loadUiType(ui_path)):
 
         dlg = Prepare_BL_Dialog.PrepareBLDialog(curr_energy, self.prepare_bl_def, parent=self)
         if dlg.exec_():
+
             self.prepare_bl(curr_energy)
 
     def enable_fb(self, value):
