@@ -3,6 +3,8 @@ from PyQt5 import uic, QtGui, QtCore
 import pkg_resources
 import requests
 import urllib.request
+import os
+import subprocess
 
 from isstools.dialogs import UpdateUserDialog
 from timeit import default_timer as timer
@@ -40,6 +42,7 @@ class UIGeneralInfo(*uic.loadUiType(ui_path)):
             self.timer_update_user_info.start(60*1000)
             self.timer_update_user_info.singleShot(0, self.update_user_info)
             self.push_set_user_info.clicked.connect(self.set_user_info)
+            self.push_email_results.clicked.connect(self.email_results)
         else:
             self.push_update_user.setEnabled(False)
 
@@ -122,3 +125,22 @@ class UIGeneralInfo(*uic.loadUiType(ui_path)):
             stop2 = timer()
             print(stop1 - start)
             print(stop2 - start)
+
+    def email_results(self):
+        year = self.RE.md['year']
+        cycle = self.RE.md['cycle']
+        proposal =  self.RE.md['PROPOSAL']
+        path_to_results = f'/nsls2/xf08id/User Data/{year}.{cycle}.{proposal}/'
+        print(path_to_results)
+        files = os.listdir(path_to_results)
+        for file in files:
+            if file.endswith('.zip'):
+                os.remove(os.path.join(path_to_results, file))
+
+        PI  = self.RE.md['PI']
+        os_path = f'\"{path_to_results}\"'
+        zip_file = f'\"{path_to_results}{PI}.zip\"'
+        print(f'>>>> {zip_file}')
+        subprocess.call(f'zip {zip_file} {os_path}*.dat', shell=True)
+
+

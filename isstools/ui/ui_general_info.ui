@@ -193,6 +193,19 @@
     <string>Update</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="push_email_results">
+   <property name="geometry">
+    <rect>
+     <x>455</x>
+     <y>80</y>
+     <width>106</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>E-mail results</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
