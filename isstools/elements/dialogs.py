@@ -18,3 +18,15 @@ def question_message_box(qwidget,title, question):
         return False
     else:
         return False
+
+def input_dialog(qwidget,title,question):
+    text, okPressed = QtWidgets.QInputDialog.getText(qwidget,title,question, QtWidgets.QLineEdit.Normal, "")
+    if okPressed and text != '':
+       return text
+
+
+
+
+
+
+

@@ -7,6 +7,7 @@ import os
 import subprocess
 
 from isstools.dialogs import UpdateUserDialog
+from isstools.elements.dialogs import input_dialog, message_box
 from timeit import default_timer as timer
 
 ui_path = pkg_resources.resource_filename('isstools', 'ui/ui_general_info.ui')
@@ -127,20 +128,13 @@ class UIGeneralInfo(*uic.loadUiType(ui_path)):
             print(stop2 - start)
 
     def email_results(self):
-        year = self.RE.md['year']
-        cycle = self.RE.md['cycle']
-        proposal =  self.RE.md['PROPOSAL']
-        path_to_results = f'/nsls2/xf08id/User Data/{year}.{cycle}.{proposal}/'
-        print(path_to_results)
-        files = os.listdir(path_to_results)
-        for file in files:
-            if file.endswith('.zip'):
-                os.remove(os.path.join(path_to_results, file))
-
-        PI  = self.RE.md['PI']
-        os_path = f'\"{path_to_results}\"'
-        zip_file = f'\"{path_to_results}{PI}.zip\"'
-        print(f'>>>> {zip_file}')
-        subprocess.call(f'zip {zip_file} {os_path}*.dat', shell=True)
-
+        email = input_dialog(self,'Send results','Please enter your email address')
+        if email:
+            gmail_service = gm_setup()
+            drive_service = gd_setup()
+            gd_email_results(drive_service, gmail_service,'liuz@bnl.gov')
+            message_box('Results sent succesfully',('You will need ISS beamline Google Drive\n'
+                                                    'credentials to retrieve the results.\n'
+                                                    'Plese consults beamline staff.')
+)
 
