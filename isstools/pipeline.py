@@ -28,9 +28,6 @@ def det_correction(x):
     pass
 
 
-pre_edge = np.zeros(10)
-
-
 def normalize(x):
     pass
 
@@ -43,14 +40,20 @@ def Retrieve(x):
     pass
 
 
+pre_edge = np.zeros(10)
+
+post_edge = np.zeros(10)
+
+window = np.ones(10)
+
 handler_reg = {}  # Fill in later
 raw_source = Stream()
 filled = raw_source.map(Retrieve(handler_reg))
 
 # This should pass out pandas dataframes now?
-a = FromEventStream('event', ('data', 'a'), filled, stream_name='a')
+a = FromEventStream('event', ('data', 'I0'), filled, stream_name='I0')
 # This should pass out pandas dataframes now?
-b = FromEventStream('event', ('data', 'b'), filled, stream_name='b')
+b = FromEventStream('event', ('data', 'It'), filled, stream_name='It')
 
 interp_data = a.zip(b).map(interpolate_dataframes)
 bin_data = interp_data.map(bin_spectra,
@@ -71,3 +74,5 @@ k_weight_mu = pe_corrected_mu.zip(k.map(lambda x: x ** 2)).map(op.mul)
 window_mu = k_weight_mu.map(op.mul, window)
 
 xafs_real_space = window_mu.map(np.fft.fft)
+
+raw_source.visualize(source_node=True)
